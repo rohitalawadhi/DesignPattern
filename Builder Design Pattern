@@ -1,0 +1,54 @@
+#include <iostream>
+#include <vector>
+
+class Pizza {
+public:
+  Pizza(const std::string& dough, const std::vector<std::string>& toppings) :
+    dough_(dough), toppings_(toppings) {}
+
+  std::string get_dough() const { return dough_; }
+  const std::vector<std::string>& get_toppings() const { return toppings_; }
+
+private:
+  std::string dough_;
+  std::vector<std::string> toppings_;
+};
+
+class PizzaBuilder {
+public:
+  PizzaBuilder& with_dough(const std::string& dough) {
+    dough_ = dough;
+    return *this;
+  }
+
+   PizzaBuilder& add_topping(const std::string& topping){
+     toppings_.push_back(topping);
+     return *this;
+    }
+
+  Pizza build() const {
+    return Pizza(dough_, toppings_);
+  }
+
+private:
+  std::string dough_;
+  std::vector<std::string> toppings_;
+};
+
+int main() {
+  PizzaBuilder builder;
+  Pizza pizza = builder.with_dough("Thin crust")
+                     .add_topping("Pepperoni")
+                     .add_topping("Mushrooms")
+                     .build();
+
+  std::cout << "You ordered a " << pizza.get_dough() << " pizza with " <<
+               pizza.get_toppings().size() << " toppings." << std::endl;
+  return 0;
+}
+
+
+
+O/P
+-----------------------------------------------
+You ordered a Thin crust pizza with 2 toppings.
